@@ -26,7 +26,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" required class="form-control"/>
+                <input type="text" id="email" name="email" value="<?php echo $email ?>" required class="form-control"/>
                 <?php echo $emailErr ?>
             </div>
             <div></div>
@@ -38,23 +38,25 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" required class="form-control">
+                    <input type="text" name="street" id="street" value="<?php echo $street ?>" required class="form-control">
                     <?php echo $streetErr ?>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" required class="form-control">
+                    <input type="text" id="streetnumber" value="<?php echo $streetnumber ?>" name="streetnumber" required class="form-control">
+                    <?php echo $streetnumberErr ?>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" required class="form-control">
+                    <input type="text" id="city" value="<?php echo $city ?>" name="city" required class="form-control">
                     <?php echo $cityErr ?>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" required class="form-control">
+                    <input type="text" id="zipcode" value="<?php echo $zipcode ?>" name="zipcode" required class="form-control">
+                    <?php echo $zipcodeErr ?>
                 </div>
             </div>
         </fieldset>
@@ -84,5 +86,6 @@
         text-align: center;
     }
 </style>
+
 </body>
 </html>
