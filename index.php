@@ -7,7 +7,6 @@ declare(strict_types=1);
 session_start();
 
 
-
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
@@ -19,7 +18,6 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
-
 
 
 if (!isset($_GET["food"]) == 1 or $_GET["food"]) {
@@ -47,48 +45,71 @@ $email = $street = $streetnumber = $city = $zipcode = $emailErr = $streetErr = $
 //}
 
 //validating variables and saving them inside of the session when validated and correct.
- if (isset($_SESSION["email"])){
-     $email = $_SESSION["email"];
-     $street = $_SESSION["street"];
-     $streetnumber = $_SESSION["streetnumber"];
-     $city = $_SESSION["city"];
-     $zipcode = $_SESSION["zipcode"];
- }
-else if($_SERVER["REQUEST_METHOD"] == "POST"){
-$email = test_input($_POST["email"]);
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $emailErr = "Invalid email format";
-} else {
-    $_SESSION["email"] = $email;
-}
+if (isset($_SESSION["email"])) {
+    $email = $_SESSION["email"];
+    $street = $_SESSION["street"];
+    $streetnumber = $_SESSION["streetnumber"];
+    $city = $_SESSION["city"];
+    $zipcode = $_SESSION["zipcode"];
 
-$street = test_input($_POST["street"]);
-if (!preg_match("/^[a-zA-Z-' ]*$/", $street)) {
-    $streetErr = "Only letters and white space allowed";
-} else {
-    $_SESSION["street"] = $street;
-}
+} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["email"])) {
+        $emailErr = "Please fill in your email adress";
+    } else {
+        $email = test_input($_POST["email"]);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+        } else {
+            $_SESSION["email"] = $email;
+        }
+    }
 
-$streetnumber = test_input($_POST["streetnumber"]);
-if (!preg_match('#[0-9]#', $streetnumber)) {
-    $streetnumberErr = "Only use numbers";
-} else {
-    $_SESSION["streetnumber"] = $streetnumber;
-}
+    if (empty($_POST["street"])) {
+        $streetErr = "Please fill in your street name";
+    } else {
+        $street = test_input($_POST["street"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $street)) {
+            $streetErr = "Only letters and white space allowed";
+        } else {
+            $_SESSION["street"] = $street;
+        }
+    }
 
-$city = test_input($_POST["city"]);
-if (!preg_match("/^[a-zA-Z-' ]*$/", $city)) {
-    $cityErr = "Only letters and white space allowed";
-} else {
-    $_SESSION["city"] = $city;
-}
+    if (empty($_POST[streetnumber])) {
+        $streetnumberErr = "Please fill in your streetnumber";
+    }
+    else {
+        $streetnumber = test_input($_POST["streetnumber"]);
+        if (!preg_match('#[0-9]#', $streetnumber)) {
+            $streetnumberErr = "Only use numbers";
+        } else {
+            $_SESSION["streetnumber"] = $streetnumber;
+        }
+    }
 
-$zipcode = test_input($_POST["zipcode"]);
-if (!preg_match('#[0-9]{4}#', $zipcode)) {
-    $zipcodeErr = "Only use numbers, max. 4 numbers allowed.";
-} else {
-    $_SESSION["zipcode"] = $zipcode;
-}
+    if (empty($_POST["city"])) {
+        $cityErr = "Please fill in the name of your city";
+    }
+    else {
+        $city = test_input($_POST["city"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $city)) {
+            $cityErr = "Only letters and white space allowed";
+        } else {
+            $_SESSION["city"] = $city;
+        }
+    }
+
+    if (empty($_POST["zipcode"])) {
+        $zipcodeErr = "Please fill in your email adress";
+    }
+    else {
+        $zipcode = test_input($_POST["zipcode"]);
+        if (!preg_match('#[0-9]{4}#', $zipcode)) {
+            $zipcodeErr = "Only use numbers, max. 4 numbers allowed.";
+        } else {
+            $_SESSION["zipcode"] = $zipcode;
+        }
+    }
 }
 
 
