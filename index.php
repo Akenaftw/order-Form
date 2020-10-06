@@ -40,9 +40,6 @@ if (!isset($_GET["food"]) == 1 or $_GET["food"]) {
 $email = $street = $streetnumber = $city = $zipcode = $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = '';
 
 // if sessions exists use session else leave empty
-//if ($_SESSION["newsession"]) {
-//     $email = $_SESSION["email"];
-//}
 
 //validating variables and saving them inside of the session when validated and correct.
 if (isset($_SESSION["email"])) {
@@ -51,6 +48,16 @@ if (isset($_SESSION["email"])) {
     $streetnumber = $_SESSION["streetnumber"];
     $city = $_SESSION["city"];
     $zipcode = $_SESSION["zipcode"];
+    $deliverytime = deliveryTime();
+
+
+    if(empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)){
+        $orderMessage = "Your order is succesfully completed";
+    }
+
+    else{
+        $orderMessage = "Please fill in the required fields";
+    }
 
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
@@ -75,7 +82,7 @@ if (isset($_SESSION["email"])) {
         }
     }
 
-    if (empty($_POST[streetnumber])) {
+    if (empty($_POST["streetnumber"])) {
         $streetnumberErr = "Please fill in your streetnumber";
     }
     else {
@@ -110,6 +117,22 @@ if (isset($_SESSION["email"])) {
             $_SESSION["zipcode"] = $zipcode;
         }
     }
+    if(empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)){
+        $orderMessage = "Your order is succesfully completed";
+    }
+
+    else{
+        $orderMessage = "Please fill in the required fields";
+    }
+}
+function deliveryTime() {
+    if(isset($_POST["express_delivery"]) && $_POST['express_delivery'] == "5"){
+        $deliverytime = "Your order will be delivered in 45 minutes";
+    }
+    else{
+        $deliverytime = "Your order will be delivered 2 hours";
+    }
+    return $deliverytime;
 }
 
 
@@ -121,7 +144,9 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
+function totalValue(){
 
+}
 $totalValue = 0;
 whatIsHappening();
 

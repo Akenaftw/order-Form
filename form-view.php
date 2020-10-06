@@ -22,6 +22,12 @@
             </li>
         </ul>
     </nav>
+    <div>
+    <?php echo $orderMessage ?>
+    </div>
+    <div>
+    <?php echo $deliverytime ?>
+    </div>
     <form method="post">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -71,7 +77,7 @@
         </fieldset>
         
         <label>
-            <input type="checkbox" name="express_delivery" value="5" /> 
+            <input type="checkbox" name="express_delivery" value="5" />
             Express delivery (+ 5 EUR) 
         </label>
             
