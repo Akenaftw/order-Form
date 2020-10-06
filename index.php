@@ -22,18 +22,15 @@ function whatIsHappening()
 
 if (!isset($_GET["food"]) == 1 or $_GET["food"]) {
     $products = [
-        ['name' => 'Club Ham', 'price' => 3.20],
-        ['name' => 'Club Cheese', 'price' => 3],
-        ['name' => 'Club Cheese & Ham', 'price' => 4],
-        ['name' => 'Club Chicken', 'price' => 4],
-        ['name' => 'Club Salmon', 'price' => 5]
-    ];
-} else {
-    $products = [
-        ['name' => 'Cola', 'price' => 2],
-        ['name' => 'Fanta', 'price' => 2],
-        ['name' => 'Sprite', 'price' => 2],
-        ['name' => 'Ice-tea', 'price' => 3],
+        ['name' => 'Club Ham', 'class' => food , 'price' => 3.20],
+        ['name' => 'Club Cheese', 'class' => food, 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'class' => food, 'price' => 4],
+        ['name' => 'Club Chicken', 'class' => food , 'price' => 4],
+        ['name' => 'Club Salmon', 'class' => food , 'price' => 5],
+        ['name' => 'Cola', 'class' => drinks ,'price' => 2],
+        ['name' => 'Fanta', 'class' => drinks ,'price' => 2],
+        ['name' => 'Sprite', 'class' => drinks , 'price' => 2],
+        ['name' => 'Ice-tea', 'class' => drinks ,'price' => 3],
     ];
 }
 //defining all variables as empty at start of loading the page
@@ -145,7 +142,16 @@ function test_input($data)
     return $data;
 }
 function totalValue(){
+if (isset($_POST["products"])){
+    $food = $_POST["products"];
+    $count = count($food);
+    for ($i=o;$i<$count;$i++){
+        if ($food[$i]==1){
+        }
 
+    }
+
+}
 }
 $totalValue = 0;
 whatIsHappening();
