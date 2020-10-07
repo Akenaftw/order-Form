@@ -34,6 +34,7 @@
                 <label for="email">E-mail:</label>
                 <input type="text" id="email" name="email" value="<?php echo $email ?>"  class="form-control"/>
                 <?php echo $emailErr ?>
+
             </div>
             <div></div>
         </div>
@@ -69,8 +70,9 @@
 
         <fieldset>
             <legend>Products</legend>
-            <?php foreach ($products AS $i => $product): ?>
+            <?php foreach (arrayDeterm() AS $i => $product): ?>
                 <label>
+                    <!-- <input type="checkbox value="1" name= function arrayDeterm  -->
                     <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?> -
                     &euro; <?php echo number_format($product['price'], 2) ?></label><br />
             <?php endforeach; ?>
@@ -80,8 +82,10 @@
             <input type="checkbox" name="express_delivery" value="5" />
             Express delivery (+ 5 EUR) 
         </label>
-            
+        
+        <button type="button" class="btn btn-primary">add to cart</button>
         <button type="submit" class="btn btn-primary">Order!</button>
+
     </form>
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>

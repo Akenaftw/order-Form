@@ -19,20 +19,44 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
+$products = [
+    ['name' => 'Club Ham', 'class' => 'food', 'price' => 3.20],
+    ['name' => 'Club Cheese', 'class' => 'food', 'price' => 3],
+    ['name' => 'Club Cheese & Ham', 'class' => 'food', 'price' => 4],
+    ['name' => 'Club Chicken', 'class' => 'food', 'price' => 4],
+    ['name' => 'Club Salmon', 'class' => 'food', 'price' => 5],
+    ['name' => 'Cola', 'class' => 'drinks', 'price' => 2],
+    ['name' => 'Fanta', 'class' => 'drinks', 'price' => 2],
+    ['name' => 'Sprite', 'class' => 'drinks', 'price' => 2],
+    ['name' => 'Ice-tea', 'class' => 'drinks', 'price' => 3],
+];
 
-if (!isset($_GET["food"]) == 1 or $_GET["food"]) {
-    $products = [
-        ['name' => 'Club Ham', 'class' => food , 'price' => 3.20],
-        ['name' => 'Club Cheese', 'class' => food, 'price' => 3],
-        ['name' => 'Club Cheese & Ham', 'class' => food, 'price' => 4],
-        ['name' => 'Club Chicken', 'class' => food , 'price' => 4],
-        ['name' => 'Club Salmon', 'class' => food , 'price' => 5],
-        ['name' => 'Cola', 'class' => drinks ,'price' => 2],
-        ['name' => 'Fanta', 'class' => drinks ,'price' => 2],
-        ['name' => 'Sprite', 'class' => drinks , 'price' => 2],
-        ['name' => 'Ice-tea', 'class' => drinks ,'price' => 3],
-    ];
+$foodArr = array();
+$drinksArr = array();
+$amountproducts = count($products);
+
+for ($i = 0; $i <= $amountproducts; $i++) {
+    foreach ($products[$i] as $values) {
+        if ($values == "food") {
+            array_push($foodArr, $products[$i]);
+        } elseif ($values == "drinks") {
+            array_push($drinksArr, $products[$i]);
+        }
+    }
 }
+
+function arrayDeterm()
+{
+
+    if (!isset($_GET["food"]) == 1 or $_GET["food"]) {
+
+        return $GLOBALS['foodArr'];
+    } else {
+        return $GLOBALS['drinksArr'];
+    }
+}
+
+
 //defining all variables as empty at start of loading the page
 $email = $street = $streetnumber = $city = $zipcode = $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = '';
 
@@ -46,13 +70,13 @@ if (isset($_SESSION["email"])) {
     $city = $_SESSION["city"];
     $zipcode = $_SESSION["zipcode"];
     $deliverytime = deliveryTime();
+    //$drinksArr = $_SESSION["drinksArr"];
+    //$foodArr = $_SESSION["foodArr"];
 
 
-    if(empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)){
+    if (empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)) {
         $orderMessage = "Your order is succesfully completed";
-    }
-
-    else{
+    } else {
         $orderMessage = "Please fill in the required fields";
     }
 
@@ -81,8 +105,7 @@ if (isset($_SESSION["email"])) {
 
     if (empty($_POST["streetnumber"])) {
         $streetnumberErr = "Please fill in your streetnumber";
-    }
-    else {
+    } else {
         $streetnumber = test_input($_POST["streetnumber"]);
         if (!preg_match('#[0-9]#', $streetnumber)) {
             $streetnumberErr = "Only use numbers";
@@ -93,8 +116,7 @@ if (isset($_SESSION["email"])) {
 
     if (empty($_POST["city"])) {
         $cityErr = "Please fill in the name of your city";
-    }
-    else {
+    } else {
         $city = test_input($_POST["city"]);
         if (!preg_match("/^[a-zA-Z-' ]*$/", $city)) {
             $cityErr = "Only letters and white space allowed";
@@ -105,8 +127,7 @@ if (isset($_SESSION["email"])) {
 
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "Please fill in your email adress";
-    }
-    else {
+    } else {
         $zipcode = test_input($_POST["zipcode"]);
         if (!preg_match('#[0-9]{4}#', $zipcode)) {
             $zipcodeErr = "Only use numbers, max. 4 numbers allowed.";
@@ -114,19 +135,17 @@ if (isset($_SESSION["email"])) {
             $_SESSION["zipcode"] = $zipcode;
         }
     }
-    if(empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)){
+    if (empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)) {
         $orderMessage = "Your order is succesfully completed";
-    }
-
-    else{
+    } else {
         $orderMessage = "Please fill in the required fields";
     }
 }
-function deliveryTime() {
-    if(isset($_POST["express_delivery"]) && $_POST['express_delivery'] == "5"){
+function deliveryTime()
+{
+    if (isset($_POST["express_delivery"]) && $_POST['express_delivery'] == "5") {
         $deliverytime = "Your order will be delivered in 45 minutes";
-    }
-    else{
+    } else {
         $deliverytime = "Your order will be delivered 2 hours";
     }
     return $deliverytime;
@@ -141,18 +160,20 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
-function totalValue(){
-if (isset($_POST["products"])){
-    $food = $_POST["products"];
-    $count = count($food);
-    for ($i=o;$i<$count;$i++){
-        if ($food[$i]==1){
+
+function totalValue()
+{
+    if (isset($_POST["products"])) {
+        $food = $_POST["products"];
+        $count = count($food);
+        for ($i = 0; $i < $count; $i++) {
+
         }
 
     }
 
 }
-}
+
 $totalValue = 0;
 whatIsHappening();
 
