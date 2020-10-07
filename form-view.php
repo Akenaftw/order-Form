@@ -82,7 +82,7 @@
             <input type="checkbox" name="express_delivery" value="5" />
             Express delivery (+ 5 EUR) 
         </label>
-        
+
         <button type="button" class="btn btn-primary">add to cart</button>
         <button type="submit" class="btn btn-primary">Order!</button>
 

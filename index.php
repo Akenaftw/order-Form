@@ -6,7 +6,7 @@ declare(strict_types=1);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
-
+// memory dump on top of the page
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
@@ -18,7 +18,7 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
-
+// array of the menu of orderable goods
 $products = [
     ['name' => 'Club Ham', 'class' => 'food', 'price' => 3.20],
     ['name' => 'Club Cheese', 'class' => 'food', 'price' => 3],
@@ -34,7 +34,7 @@ $products = [
 $foodArr = array();
 $drinksArr = array();
 $amountproducts = count($products);
-
+// for loop to split up the products array to 2 groups based on class food and drinks
 for ($i = 0; $i <= $amountproducts; $i++) {
     foreach ($products[$i] as $values) {
         if ($values == "food") {
@@ -45,6 +45,7 @@ for ($i = 0; $i <= $amountproducts; $i++) {
     }
 }
 
+// function to determine which array to display in the html, food or drinks.
 function arrayDeterm()
 {
 
@@ -141,6 +142,7 @@ if (isset($_SESSION["email"])) {
         $orderMessage = "Please fill in the required fields";
     }
 }
+// calculation of the deliverytime, express delivery or not
 function deliveryTime()
 {
     if (isset($_POST["express_delivery"]) && $_POST['express_delivery'] == "5") {
@@ -160,7 +162,7 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
-
+//calculation script for the total value of all the orders including the one you are making now.
 function totalValue()
 {
     if (isset($_POST["products"])) {
