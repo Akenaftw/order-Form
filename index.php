@@ -2,7 +2,10 @@
 
 //this line makes PHP behave in a more strict way
 declare(strict_types=1);
-
+//error display
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
@@ -18,6 +21,7 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
+
 // array of the menu of orderable goods
 $products = [
     ['name' => 'Club Ham', 'class' => 'food', 'price' => 3.20],
@@ -35,7 +39,7 @@ $foodArr = array();
 $drinksArr = array();
 $amountproducts = count($products);
 // for loop to split up the products array to 2 groups based on class food and drinks
-for ($i = 0; $i <= $amountproducts; $i++) {
+for ($i = 0; $i < $amountproducts; $i++) {
     foreach ($products[$i] as $values) {
         if ($values == "food") {
             array_push($foodArr, $products[$i]);
@@ -48,7 +52,6 @@ for ($i = 0; $i <= $amountproducts; $i++) {
 // function to determine which array to display in the html, food or drinks.
 function arrayDeterm()
 {
-
     if (!isset($_GET["food"]) == 1 or $_GET["food"]) {
 
         return $GLOBALS['foodArr'];
@@ -59,9 +62,10 @@ function arrayDeterm()
 
 
 //defining all variables as empty at start of loading the page
-$email = $street = $streetnumber = $city = $zipcode = $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = '';
+$email = $street = $streetnumber = $city = $zipcode = $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = $orderMessage = '';
 
 // if sessions exists use session else leave empty
+
 
 //validating variables and saving them inside of the session when validated and correct.
 if (isset($_SESSION["email"])) {
@@ -73,15 +77,21 @@ if (isset($_SESSION["email"])) {
     $deliverytime = deliveryTime();
     //$drinksArr = $_SESSION["drinksArr"];
     //$foodArr = $_SESSION["foodArr"];
+}
+$cookie = array("email" => $email, "street" => $street, "streetnumber" => $streetnumber, "city" => $city, "zipcode" => $zipcode);
+function setCookie($cookie, $name)
+{   $cookiestring = http_build_query($cookie);
+    setcookie($name, $cookiestring, time()+86400);
+}
+function readCookie($cookieName){
+    $cookiedata = $_COOKIE[$cookieName];
+    parse_str($cookiedata, $data);
+    return $data;
+}
+echo readCookie('data');
+setCookie($cookie,'data');
 
-
-    if (empty($emailErr && $streetErr && $streetnumberErr && $cityErr && $zipcodeErr)) {
-        $orderMessage = "Your order is succesfully completed";
-    } else {
-        $orderMessage = "Please fill in the required fields";
-    }
-
-} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
         $emailErr = "Please fill in your email adress";
     } else {
@@ -142,6 +152,7 @@ if (isset($_SESSION["email"])) {
         $orderMessage = "Please fill in the required fields";
     }
 }
+
 // calculation of the deliverytime, express delivery or not
 function deliveryTime()
 {
@@ -162,8 +173,9 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
+
 //calculation script for the total value of all the orders including the one you are making now.
-function totalValue()
+/*function totalValue()
 {
     if (isset($_POST["products"])) {
         $food = $_POST["products"];
@@ -173,8 +185,7 @@ function totalValue()
         }
 
     }
-
-}
+}*/
 
 $totalValue = 0;
 whatIsHappening();
