@@ -75,21 +75,24 @@ if (isset($_SESSION["email"])) {
     $city = $_SESSION["city"];
     $zipcode = $_SESSION["zipcode"];
     $deliverytime = deliveryTime();
-    //$drinksArr = $_SESSION["drinksArr"];
-    //$foodArr = $_SESSION["foodArr"];
+    //$products =
+    $cookie = array("email" => $email, "street" => $street, "streetnumber" => $streetnumber, "city" => $city, "zipcode" => $zipcode);
+
 }
-$cookie = array("email" => $email, "street" => $street, "streetnumber" => $streetnumber, "city" => $city, "zipcode" => $zipcode);
-function setCookie($cookie, $name)
-{   $cookiestring = http_build_query($cookie);
-    setcookie($name, $cookiestring, time()+86400);
+
+function setThisCookie($name){                      // function definition
+   $cookiestring = http_build_query($GLOBALS['cookie']); //makes strings out of assoc array
+    setcookie($name, $cookiestring, time()+86400);// making cookie with the memory time
 }
-function readCookie($cookieName){
-    $cookiedata = $_COOKIE[$cookieName];
-    parse_str($cookiedata, $data);
-    return $data;
+function readCookie($name){ //takes value name into function
+    if (isset($_COOKIE[$name])){ //checks if names are set in the cookielibrary
+    $cookiedata = $_COOKIE[$name]; // var cookiedata gets filled with setcookies with a name
+    parse_str($cookiedata, $data); // making an assoc array from the strings
+    return $data;// returns the filled in assoc array
+    }
 }
 echo readCookie('data');
-setCookie($cookie,'data');
+setThisCookie('data');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
@@ -179,7 +182,7 @@ function test_input($data)
 {
     if (isset($_POST["products"])) {
         $food = $_POST["products"];
-        $count = count($food);
+        $count = count("products");
         for ($i = 0; $i < $count; $i++) {
 
         }
