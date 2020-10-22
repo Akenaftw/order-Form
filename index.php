@@ -88,8 +88,9 @@ function readCookie($name){ //takes value name into function
     if (isset($_COOKIE[$name])){ //checks if names are set in the cookielibrary
     $cookiedata = $_COOKIE[$name]; // var cookiedata gets filled with setcookies with a name
     parse_str($cookiedata, $data); // making an assoc array from the strings
-    return $data;// returns the filled in assoc array
+
     }
+    return $data;// returns the filled in assoc array
 }
 echo readCookie('data');
 setThisCookie('data');
